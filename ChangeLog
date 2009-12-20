@@ -1,3 +1,9 @@
+[2.5 release]
+
+2009-12-20  Ivan Maidanski <ivmai@mail.ru>
+
+	* htdocs/index.html: New file (also put to sftp:web.sf.net/htdocs).
+
 2009-12-20  Ivan Maidanski <ivmai@mail.ru>
 
 	* ChangeLog: New file.
