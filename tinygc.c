@@ -1,8 +1,8 @@
 /*
  * @(#) tinygc.c -- TinyGC (Tiny Garbage Collector) source.
- * Copyright (C) 2006-2009 Ivan Maidanski <ivmai@mail.ru> All rights reserved.
+ * Copyright (C) 2006-2010 Ivan Maidanski <ivmai@mail.ru> All rights reserved.
  **
- * Version: 2.5
+ * Version: 2.6
  * See also files: gc.h, gc_gcj.h, gc_mark.h, javaxfc.h
  * Required: any ANSI C compiler (assume GC-safe compilation).
  */
@@ -675,6 +675,8 @@ GC_DATASTATIC GC_word GC_free_space_divisor = (GC_FREE_SPACE_DIVISOR);
 GC_DATASTATIC GC_word GC_max_retries = (GC_MAX_RETRIES);
 
 GC_DATASTATIC GC_finalizer_notifier_proc GC_finalizer_notifier = 0;
+
+GC_DATASTATIC GC_start_callback_proc GC_start_call_back = 0;
 
 #ifdef ALL_INTERIOR_POINTERS
 GC_DATASTATIC int GC_all_interior_pointers = 1;
@@ -2755,6 +2757,7 @@ GC_STATIC void GC_FASTCALL GC_collect_unreachable(struct GC_gcdata_s *gcdata,
 {
  GC_word oldcnt;
  GC_word obj_count;
+ GC_start_callback_proc start_fn;
 #ifndef GC_NO_FNLZ
  GC_word ready_count = 0;
 #endif
@@ -2769,6 +2772,8 @@ GC_STATIC void GC_FASTCALL GC_collect_unreachable(struct GC_gcdata_s *gcdata,
 #endif
  if (gcdata->dataroots != NULL)
  {
+  if ((start_fn = GC_start_call_back) != 0)
+   (*start_fn)();
 #ifdef GC_PRINT_MSGS
   if (GC_verbose_gc)
   {
@@ -3263,6 +3268,14 @@ GC_API void GC_CALL GC_set_finalizer_notifier(GC_finalizer_notifier_proc fn)
  GC_LEAVE(gcdata);
 }
 
+GC_API void GC_CALL GC_set_start_callback(GC_start_callback_proc fn)
+{
+ struct GC_gcdata_s *gcdata;
+ GC_enter(&gcdata);
+ GC_start_call_back = fn;
+ GC_LEAVE(gcdata);
+}
+
 GC_API void GC_CALL GC_set_stop_func(GC_stop_func fn)
 {
  struct GC_gcdata_s *gcdata;
@@ -3368,6 +3381,16 @@ GC_API GC_finalizer_notifier_proc GC_CALL GC_get_finalizer_notifier(void)
  GC_finalizer_notifier_proc fn;
  GC_enter(&gcdata);
  fn = GC_finalizer_notifier;
+ GC_LEAVE(gcdata);
+ return fn;
+}
+
+GC_API GC_start_callback_proc GC_CALL GC_get_start_callback(void)
+{
+ struct GC_gcdata_s *gcdata;
+ GC_start_callback_proc fn;
+ GC_enter(&gcdata);
+ fn = GC_start_call_back;
  GC_LEAVE(gcdata);
  return fn;
 }

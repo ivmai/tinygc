@@ -4,6 +4,7 @@
 <META http-equiv="content-type" content="text/html; charset=iso-8859-1">
 <META http-equiv="content-language" content="en-us">
 
+<meta name="google-site-verification" content="euF_Ds6ls67K5HQAK1QLmLN-9T0UpvF2SdDOK_qBUIs" />
 <TITLE>TinyGC - Tiny Garbage Collector</TITLE>
 <LINK rev=made href="mailto:ivmai@mail.ru">
 <META name="author" content="Ivan Maidanski">
@@ -185,7 +186,7 @@ malloc implementation) is done lazily (between collections).
 <P>The major <ACRONYM>TinyGC</ACRONYM> advantages over
 <ACRONYM>BoehmGC</ACRONYM> are:
 <UL>
-<LI>small code size (it could be as small as 3760 bytes);
+<LI>small code size (it could be as small as 3800 bytes);
 <LI>16-bit architectures are supported;
 <LI>small initial internal data size;
 <LI>less source code (to verify);
@@ -282,7 +283,7 @@ overridden at run-time);
 overridden at run-time);
 <LI>GC_INITIAL_HEAP_SIZE=&lt;value> - set the desired default initial heap
 size (in bytes);
-<LI>GC_FREE_SPACE_DIVISOR=&lt;value> - the default tradeoff between garbage
+<LI>GC_FREE_SPACE_DIVISOR=&lt;value> - the default trade-off between garbage
 collection and heap growth;
 <LI>GC_MAX_RETRIES=&lt;value> - the default maximum number of garbage
 collections attempted before reporting out of memory after a heap expansion
@@ -342,6 +343,8 @@ lowest bits ignored for object address hash computations.
 run-time);
 <LI>GC_DLL - use <ACRONYM>TinyGC</ACRONYM> residing in a
 <ACRONYM>DLL</ACRONYM>;
+<LI>GC_THREADS - declare the prototypes for the collector multi-threading
+support;
 <LI>GC_CALL=&lt;calling_conv> - explicitly specify calling convention for the
 <ACRONYM>GC</ACRONYM> <ACRONYM>API</ACRONYM> functions;
 <LI>GC_CALLBACK=&lt;calling_conv> - explicitly specify an alternate calling
@@ -351,7 +354,7 @@ callbacks;
 bytes);
 <LI>GC_MAXIMUM_HEAP_SIZE=&lt;value> - set the desired maximum heap size (in
 bytes);
-<LI>GC_FREE_SPACE_DIVISOR=&lt;value> - set the desired tradeoff between
+<LI>GC_FREE_SPACE_DIVISOR=&lt;value> - set the desired trade-off between
 garbage collection and heap growth;
 <LI>GC_MAX_RETRIES=&lt;value> - set the desired maximum number of garbage
 collections attempted before reporting out of memory after a heap expansion
@@ -382,7 +385,7 @@ options:
 descriptors (if supported);
 <LI>GC_INITIAL_HEAP_SIZE=&lt;value> - set the initial heap size (in bytes);
 <LI>GC_MAXIMUM_HEAP_SIZE=&lt;value> - set the maximum heap size (in bytes);
-<LI>GC_FREE_SPACE_DIVISOR=&lt;value> - change the default tradeoff between
+<LI>GC_FREE_SPACE_DIVISOR=&lt;value> - change the default trade-off between
 garbage collection and heap growth.
 </UL>
 <P>Note: the values assigned to the specified environment variables override
@@ -400,8 +403,9 @@ the similar default (or the preset at the compilation time) values.
 <ACRONYM>BoehmGC</ACRONYM>);
 <LI>gc_gcj.h - <ACRONYM>GCJ</ACRONYM>-style allocation <ACRONYM>API</ACRONYM>
 (the subset of that in <ACRONYM>BoehmGC</ACRONYM>);
-<LI>gc_mark.h - contains only consts for the <ACRONYM>GCJ</ACRONYM>-style
-length-based descriptors;
+<LI>gc_mark.h - contains only the constants for the
+<ACRONYM>GCJ</ACRONYM>-style length-based descriptors and the collections
+notifier prototypes;
 <LI>javaxfc.h - same as in <ACRONYM>BoehmGC</ACRONYM>;
 <LI>tinygc.c - the <ACRONYM>TinyGC</ACRONYM> implementation itself.
 </UL></DIV>
@@ -416,11 +420,18 @@ length-based descriptors;
 
 <DIV class=subsection>
 <H3>External resources</H3>
-<P>Links to 3rd-party projects:
+<P>Links to the 3rd-party projects:
 <UL>
 <LI><A class=external target="_blank" href="http://www.hpl.hp.com/personal/Hans_Boehm/gc/">BoehmGC</A>
 (A garbage collector for C and C++)
-</UL></DIV>
+<LI><A class=external target="_blank" href="http://gcc.gnu.org/java/">GNU GCJ</A>
+(a portable optimizing ahead-of-time compiler for Java)
+</UL>
+<P>For more links, please visit
+"<A href="http://www.ivmaisoft.com/jcgo/links.htm">Java and C/C++ developer web resources</A>"
+hosted on the <ACRONYM>JCGO</ACRONYM> project (a
+<A href="http://www.ivmaisoft.com/jcgo/">java2c/java2exe</A> solution) site.
+</DIV>
 
 <DIV class=license>
 <H3>License</H3>
@@ -453,8 +464,10 @@ exception statement from your version.
 </DIV>
 
 <DIV class=page-footer>
-<P class=copyright>&copy; 2006-2009
+<P class=copyright>&copy; 2006-2010
 <A class=mailto href="mailto:ivmai@mail.ru">Ivan Maidanski</A>
 </DIV>
 
+<a href="http://www3.clustrmaps.com/counter/maps.php?url=http://tinygc.sourceforge.net" id="clustrMapsLink"><img src="http://www3.clustrmaps.com/counter/index2.php?url=http://tinygc.sourceforge.net" style="border:0px;" alt="Locations of visitors to this page" title="Locations of visitors to this page" id="clustrMapsImg" onerror="this.onerror=null; this.src='http://www2.clustrmaps.com/images/clustrmaps-back-soon.jpg'; document.getElementById('clustrMapsLink').href='http://www2.clustrmaps.com';" />
+</a>
 </BODY></HTML>

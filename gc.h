@@ -1,8 +1,8 @@
 /*
  * @(#) gc.h -- TinyGC (Tiny Garbage Collector) header.
- * Copyright (C) 2006-2009 Ivan Maidanski <ivmai@mail.ru> All rights reserved.
+ * Copyright (C) 2006-2010 Ivan Maidanski <ivmai@mail.ru> All rights reserved.
  **
- * Version: 2.5
+ * Version: 2.6
  * See also files: tinygc.c, gc_gcj.h, gc_mark.h, javaxfc.h
  * Required: any ANSI C compiler (assume GC-safe compilation).
  */
@@ -39,12 +39,13 @@
 #ifndef GC_H
 #define GC_H
 
-#define GC_TINYGC_VER 250 /* TinyGC v2.5 */
+#define GC_TINYGC_VER 260 /* TinyGC v2.6 */
 
 /* TinyGC API is a subset of Boehm-Demers-Weiser Conservative GC API v7.2 */
 
 /*
- * Control macros: GC_DLL, GC_DONT_EXPAND, GC_STACKBASE_WITH_REGBASE.
+ * Control macros: GC_DLL, GC_DONT_EXPAND, GC_STACKBASE_WITH_REGBASE,
+ * GC_THREADS.
  * Macros for tuning: CONST, GC_API, GC_CALL, GC_CALLBACK, GC_DATASTART,
  * GC_DATASTART2, GC_DATASTARTSYM, GC_DATASTARTSYM2, GC_DATAEND, GC_DATAEND2,
  * GC_DATAENDSYM, GC_DATAENDSYM2, GC_FREE_SPACE_DIVISOR, GC_INITIAL_HEAP_SIZE,
@@ -225,6 +226,8 @@ GC_API void GC_NEAR *GC_CALL GC_do_blocking(GC_fn_type, void GC_NEAR *);
 GC_API void GC_NEAR *GC_CALL GC_call_with_gc_active(GC_fn_type,
  void GC_NEAR *);
 
+#ifdef GC_THREADS
+
 #ifndef GC_NO_THREAD_REDIRECTS
 /* No "implicit thread registration" mode */
 #define GC_NO_THREAD_REDIRECTS
@@ -234,6 +237,8 @@ GC_API void GC_CALL GC_allow_register_threads(void);
 GC_API int GC_CALL GC_register_my_thread(
  CONST struct GC_stack_base GC_NEAR *);
 GC_API int GC_CALL GC_unregister_my_thread(void);
+
+#endif
 
 GC_API void GC_CALL GC_set_force_unmap_on_gcollect(int);
 

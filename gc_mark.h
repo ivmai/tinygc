@@ -1,6 +1,6 @@
 /*
  * @(#) gc_mark.h -- TinyGC additional header (explicit GC marker control).
- * Copyright (C) 2006-2009 Ivan Maidanski <ivmai@mail.ru> All rights reserved.
+ * Copyright (C) 2006-2010 Ivan Maidanski <ivmai@mail.ru> All rights reserved.
  **
  * See also files: tinygc.c, gc.h, gc_gcj.h, javaxfc.h
  */
@@ -43,9 +43,22 @@
 #include "gc.h"
 #endif
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #define GC_DS_TAG_BITS 2
 #define GC_DS_TAGS ((1 << GC_DS_TAG_BITS) - 1)
 
 #define GC_DS_LENGTH 0
+
+typedef void (GC_CALLBACK *GC_start_callback_proc)(void);
+GC_API void GC_CALL GC_set_start_callback(GC_start_callback_proc);
+GC_API GC_start_callback_proc GC_CALL GC_get_start_callback(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

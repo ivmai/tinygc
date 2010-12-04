@@ -1,7 +1,7 @@
-                  TinyGC v2.5 (Tiny Garbage Collector)
+                  TinyGC v2.6 (Tiny Garbage Collector)
                   ------------------------------------
 
-Copyright (C) 2006-2009 Ivan Maidanski <ivmai@mail.ru>
+Copyright (C) 2006-2010 Ivan Maidanski <ivmai@mail.ru>
 All rights reserved.
 
 Project home page
@@ -91,7 +91,7 @@ Advantages and drawbacks
 ------------------------
 
 The major TinyGC advantages over BoehmGC are:
-- small code size (it could be as small as 3760 bytes);
+- small code size (it could be as small as 3800 bytes);
 - 16-bit architectures are supported;
 - small initial internal data size;
 - less source code (to verify);
@@ -175,7 +175,7 @@ debugging);
 overridden at run-time);
 - GC_INITIAL_HEAP_SIZE=<value> - set the desired default initial heap
 size (in bytes);
-- GC_FREE_SPACE_DIVISOR=<value> - the default tradeoff between garbage
+- GC_FREE_SPACE_DIVISOR=<value> - the default trade-off between garbage
 collection and heap growth;
 - GC_MAX_RETRIES=<value> - the default maximum number of garbage
 collections attempted before reporting out of memory after a heap
@@ -229,6 +229,8 @@ Useful macros for client application tuning (same as in BoehmGC):
 - GC_DONT_EXPAND - do not implicitly expand the heap (unless overridden
 at run-time);
 - GC_DLL - use TinyGC residing in a DLL;
+- GC_THREADS - declare the prototypes for the collector multi-threading
+support;
 - GC_CALL=<calling_conv> - explicitly specify calling convention for
 the GC API functions;
 - GC_CALLBACK=<calling_conv> - explicitly specify an alternate calling
@@ -237,7 +239,7 @@ convention for the GC API user callbacks;
 bytes);
 - GC_MAXIMUM_HEAP_SIZE=<value> - set the desired maximum heap size (in
 bytes);
-- GC_FREE_SPACE_DIVISOR=<value> - set the desired tradeoff between
+- GC_FREE_SPACE_DIVISOR=<value> - set the desired trade-off between
 garbage collection and heap growth;
 - GC_MAX_RETRIES=<value> - set the desired maximum number of garbage
 collections attempted before reporting out of memory after a heap
@@ -266,7 +268,7 @@ GC_IGNORE_GCJ_INFO - ignore the GCJ-style type descriptors (if
 supported);
 GC_INITIAL_HEAP_SIZE=<value> - set the initial heap size (in bytes);
 GC_MAXIMUM_HEAP_SIZE=<value> - set the maximum heap size (in bytes);
-GC_FREE_SPACE_DIVISOR=<value> - change the default tradeoff between
+GC_FREE_SPACE_DIVISOR=<value> - change the default trade-off between
 garbage collection and heap growth.
 
 Note: the values assigned to the specified environment variables
@@ -282,8 +284,8 @@ The TinyGC distribution consists of:
 - README.txt - this file;
 - gc.h - the main include file (the subset of that in BoehmGC);
 - gc_gcj.h - GCJ-style allocation API (the subset of that in BoehmGC);
-- gc_mark.h - contains only consts for the GCJ-style length-based
-descriptors;
+- gc_mark.h - contains only the constants for the GCJ-style
+length-based descriptors and the collections notifier prototypes;
 - javaxfc.h - same as in BoehmGC;
 - tinygc.c - the TinyGC implementation itself.
 
