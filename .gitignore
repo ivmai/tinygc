@@ -1,0 +1,14 @@
+# Ignored files in tinygc Git repo.
+
+*.a
+*.dll
+*.exe
+*.gcda
+*.gch
+*.gcno
+*.la
+*.lib
+*.lo
+*.o
+*.obj
+*.so
